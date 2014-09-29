@@ -18,6 +18,19 @@ public abstract class Jant {
     public void task(String name, Runnable r) {
         tasks.put(name, new Task(name, r));
     }
+    /** Adds a compile-time dependency. */
+    public void compile(String dep) {
+        println("Adding: " + dep);
+    }
+    /** Adds a test-time dependency. */    
+    public void test(String dep) {}
+    /** Adds a runtime dependency. */
+    public void runtime(String dep) {}
+    /** Adds a provided dependency. */
+    public void provided(String dep) {}
+    
+    /** Adds a repository. */
+    public void repository(String repo) {}
     
     public static void main(String ...a) {
         try {
