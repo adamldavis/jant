@@ -1,26 +1,26 @@
 
 // Example build file
 
-public class Build extends Jant {
+public class Build extends Jant implements JavaBuilder {
 
     public void run() {
         println("in run");
         
         task("jar", () -> {
-            println("do jar stuff");
+        	javac();
+            jar("myjar.jar");
+        });
+        task("compile", this::javac);
+        
+        task("compile2", () -> {
+        	setSrcDirectory("/secondary/java");
+        	javac();
         });
         
-        dependencies(this::deps);
-        
-        repositories(this::reps);
-    }
-    
-    public void deps() {
-        compile("com.google:guava:17.0");        
-    }
-    
-    public void reps() {
-        println("Adding repos");
+        dependencies(j -> {
+            compile("com.google:guava:17.0");
+            test("junit:junit:4.10");
+        });
     }
     
 }

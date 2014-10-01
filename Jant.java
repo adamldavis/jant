@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.util.function.*;
 
 public abstract class Jant {
 
@@ -9,11 +10,11 @@ public abstract class Jant {
 
     protected abstract void run();
     
-    public void repositories(Runnable r) {
-        r.run();
+    public void repositories(Consumer<Jant> r) {
+        r.accept(this);
     }
-    public void dependencies(Runnable r) {
-        r.run();
+    public void dependencies(Consumer<Jant> r) {
+    	r.accept(this);
     }
     public void task(String name, Runnable r) {
         tasks.put(name, new Task(name, r));
@@ -39,6 +40,7 @@ public abstract class Jant {
             if (a.length > 0) {
                 // TODO do dependsOn stuff
                 String name = a[0];
+                println ("Running task: " + name);
                 if (!j.tasks.containsKey(name)) {
                     println("Error: " + name + " task not found");
                 } else
@@ -59,8 +61,12 @@ class Task {
     public Task(String name, Runnable r) {this.name=name; this.r=r;}
 }
 
-class Dependency {}
+class Dependency {
+	
+}
 
-class Repository {}
+class Repository {
+	
+}
 
 

@@ -7,9 +7,9 @@ JAVAC=$JAVA_HOME/bin/javac
 CLP=build/classes
 mkdir -p $CLP
 
-$JAVAC -d $CLP Jant.java && $JAVAC -d $CLP Build.java  
+$JAVAC -d $CLP Jant.java Build.java JavaBuilder.java  
 
-$JAVA -cp $CLP Build $1
+$JAVA -cp $CLP Jant $1
 
 
 
