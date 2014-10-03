@@ -3,5 +3,5 @@
 
 CLP=jant.jar
 
-java -cp $CLP Build.java
+javac -cp $CLP Build.java
 java -cp $CLP:. jant.Jant $1
