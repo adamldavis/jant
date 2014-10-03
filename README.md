@@ -16,3 +16,5 @@ Usage:
 * Run ./jant.sh tasks to list all tasks.
 * Run ./jant.sh [task] to run the task.
 
+This is meant only for learning purposes - otherwise use a real build system like Gradle or Maven.
+
