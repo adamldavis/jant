@@ -1,46 +1,37 @@
+/**
+ * Copyright Adam L. Davis 2014. Distributed under Apache 2.0 license.
+ */
+package jant;
 
-import java.util.*;
-import java.util.function.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public abstract class Jant {
 
     protected Map<String,Task> tasks = new HashMap<>();
-    protected List<Dependency> dependencies = new ArrayList<>();
-    protected List<Repository> repositories = new ArrayList<>();
 
     protected abstract void run();
     
-    public void repositories(Consumer<Jant> r) {
-        r.accept(this);
-    }
-    public void dependencies(Consumer<Jant> r) {
-    	r.accept(this);
-    }
     public void task(String name, Runnable r) {
         tasks.put(name, new Task(name, r));
     }
-    /** Adds a compile-time dependency. */
-    public void compile(String dep) {
-        println("Adding: " + dep);
-    }
-    /** Adds a test-time dependency. */    
-    public void test(String dep) {}
-    /** Adds a runtime dependency. */
-    public void runtime(String dep) {}
-    /** Adds a provided dependency. */
-    public void provided(String dep) {}
-    
-    /** Adds a repository. */
-    public void repository(String repo) {}
     
     public static void main(String ...a) {
         try {
             Jant j = (Jant) Class.forName("Build").newInstance();
             j.run(); //builds model
-            if (a.length > 0) {
-                // TODO do dependsOn stuff
+            if (a.length == 0) {
+            	println("To list tasks: jant tasks\n\nTo run a task: jant <taskname>");
+            }
+            else {
                 String name = a[0];
                 println ("Running task: " + name);
+                if ("tasks".equals(name)) {
+                	println("Tasks" + j.tasks.keySet().toString());
+                	return;
+                }
                 if (!j.tasks.containsKey(name)) {
                     println("Error: " + name + " task not found");
                 } else
@@ -53,20 +44,12 @@ public abstract class Jant {
     }
     
     public static void println(String s) {System.out.println(s);}
-
+    
 }
 class Task {
     public String name;
     public Runnable r;
     public Task(String name, Runnable r) {this.name=name; this.r=r;}
-}
-
-class Dependency {
-	
-}
-
-class Repository {
-	
 }
 
 
